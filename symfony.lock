@@ -78,9 +78,6 @@
     "doctrine/sql-formatter": {
         "version": "1.1.0"
     },
-    "emag-tech-labs/rabbitmq-bundle": {
-        "version": "2.2.0"
-    },
     "enqueue/amqp-ext": {
         "version": "0.7",
         "recipe": {
@@ -135,12 +132,6 @@
     },
     "php": {
         "version": "7.4"
-    },
-    "php-amqplib/php-amqplib": {
-        "version": "v2.11.3"
-    },
-    "phpseclib/phpseclib": {
-        "version": "2.0.27"
     },
     "predis/predis": {
         "version": "v1.1.1"
