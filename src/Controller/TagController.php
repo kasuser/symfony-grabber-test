@@ -6,21 +6,27 @@ use Enqueue\Client\Message;
 use Enqueue\Client\ProducerInterface;
 use Ramsey\Uuid\Uuid;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Cache\CacheItem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Cache\CacheInterface;
 
 class TagController extends AbstractController
 {
     /**
-     * @Route("/tags/{id}", name="tags_get_by_id", methods={"GET"}, requirements={"id": "\d+"})
+     * @Route("/tags/{id}", name="tags_get_by_id", methods={"GET"})
      */
-    public function getById(int $id): Response
+    public function getById(string $id, CacheInterface $cache): Response
     {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/TagController.php',
-        ]);
+        /** @var CacheItem $cacheItem */
+        $cacheItem = $cache->getItem($id);
+
+        if ($cacheItem->isHit() === false) {
+            return $this->json(['error' => 'Job not found or not finished']);
+        }
+
+        return $this->json($cacheItem->get());
     }
 
     /**
