@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Enqueue\Client\ProducerInterface;
 use Psr\Log\InvalidArgumentException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +27,7 @@ class TagController extends AbstractController
     /**
      * @Route("/tags", name="tags_post", methods={"POST"})
      */
-    public function post(Request $request, ValidatorInterface $validator): Response
+    public function post(Request $request, ValidatorInterface $validator, ProducerInterface $producer): Response
     {
         $url = $request->get('url');
 
@@ -36,8 +37,10 @@ class TagController extends AbstractController
             throw new InvalidArgumentException($violations->get(0)->getMessage());
         }
 
+        $producer->sendEvent('grabberTopic', $url);
+
         return $this->json([
-            'message' => 'Welcome to your new controller!',
+            'message' => 'OK',
         ]);
     }
 }

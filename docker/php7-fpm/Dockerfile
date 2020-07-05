@@ -34,4 +34,13 @@ RUN pecl install -o -f redis && rm -rf /tmp/pear && docker-php-ext-enable redis
 # Create an alias for Symfony3 console
 RUN echo 'alias symfony="php bin/console"' >> ~/.bashrc
 
+RUN apt-get install -y \
+        librabbitmq-dev \
+        libssh-dev \
+    && docker-php-ext-install \
+        bcmath \
+        sockets \
+    && pecl install amqp \
+    && docker-php-ext-enable amqp
+
 WORKDIR /var/www/symfony
