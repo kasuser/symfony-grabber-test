@@ -15,3 +15,7 @@ framework:
     #fragments: true
     php_errors:
         log: true
+
+    cache:
+        app: cache.adapter.redis
+        default_redis_provider: 'redis://redis:6379'
