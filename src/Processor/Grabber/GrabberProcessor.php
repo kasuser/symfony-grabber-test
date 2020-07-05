@@ -29,7 +29,7 @@ class GrabberProcessor implements Processor, TopicSubscriberInterface
     public function process(Message $message, Context $context)
     {
         /** @var CacheItem $cacheItem */
-        $cacheItem = $this->cache->getItem($message->getProperty('id'));
+        $cacheItem = $this->cache->getItem($message->getProperty('job_id'));
         if ($cacheItem->isHit() === true) {
             return self::ACK;
         }

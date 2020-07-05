@@ -15,12 +15,12 @@ use Symfony\Contracts\Cache\CacheInterface;
 class TagController extends AbstractController
 {
     /**
-     * @Route("/tags/{id}", name="tags_get_by_id", methods={"GET"})
+     * @Route("/tags/{jobId}", name="tags_get_by_id", methods={"GET"})
      */
-    public function getById(string $id, CacheInterface $cache): Response
+    public function getById(string $jobId, CacheInterface $cache): Response
     {
         /** @var CacheItem $cacheItem */
-        $cacheItem = $cache->getItem($id);
+        $cacheItem = $cache->getItem($jobId);
 
         if ($cacheItem->isHit() === false) {
             return $this->json(['error' => 'Job not found or not finished']);
@@ -30,7 +30,7 @@ class TagController extends AbstractController
     }
 
     /**
-     * @Route("/tags", name="tags_post", methods={"POST"})
+     * @Route("/tags", name="tags_post", methods={"GET"})
      */
     public function post(Request $request, ProducerInterface $producer): Response
     {
@@ -38,8 +38,9 @@ class TagController extends AbstractController
 
         $jobId = Uuid::uuid4()->toString();
 
-        $message = new Message('Message body', ['id' => $jobId, 'url' => $url], []);
+        $message = new Message;
         $message->setMessageId($jobId);
+        $message->setProperties(['job_id' => $jobId, 'url' => $url]);
 
         $producer->sendEvent('grabberTopic', $message);
 
