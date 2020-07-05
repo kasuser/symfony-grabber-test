@@ -184,6 +184,9 @@
             "bin/console"
         ]
     },
+    "symfony/css-selector": {
+        "version": "v5.1.2"
+    },
     "symfony/dependency-injection": {
         "version": "v5.1.2"
     },
@@ -191,6 +194,9 @@
         "version": "v2.1.2"
     },
     "symfony/doctrine-bridge": {
+        "version": "v5.1.2"
+    },
+    "symfony/dom-crawler": {
         "version": "v5.1.2"
     },
     "symfony/dotenv": {
@@ -241,6 +247,12 @@
             "src/Controller/.gitignore",
             "src/Kernel.php"
         ]
+    },
+    "symfony/http-client": {
+        "version": "v5.1.2"
+    },
+    "symfony/http-client-contracts": {
+        "version": "v2.1.2"
     },
     "symfony/http-foundation": {
         "version": "v5.1.2"
